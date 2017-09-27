@@ -62,10 +62,65 @@ public class SudokuVerifierTest {
 		
 		int[][] matrix = verifier.getSudokuMatrix();
 		
-		assertEquals("String should've been right", 9, matrix.length);
-		assertEquals("String should've been right", 9, matrix[0].length);
+		assertEquals("Matrix wrong size", 9, matrix.length);
+		assertEquals("Matrix wrong size", 9, matrix[0].length);
+		assertEquals("Matrix wrong size", 9, matrix[8].length);
 	
 	}
+	
+	@Test
+	public void testSudokuRows() {
+		SudokuVerifier verifier = new SudokuVerifier();
+		
+		verifier.buildMatrix("417369825632158947958724316825437169791586432346912758289643571573291684164875293");
+		
+		boolean result = verifier.checkRows();
+		
+		assertEquals("Failed to verify row integrity", true, result);	
+	}
+	
+	@Test
+	public void testSudokuRowsFail() {
+		SudokuVerifier verifier = new SudokuVerifier();
+		
+		verifier.buildMatrix("411369825632158947958724316825437169791586432346912758289643571573291684164875293");
+		
+		boolean result = verifier.checkRows();
+		
+		assertEquals("Should've been invalid row", false, result);	
+	}
+	
+	@Test
+	public void testSudokuColumns() {
+		SudokuVerifier verifier = new SudokuVerifier();
+		
+		verifier.buildMatrix("417369825632158947958724316825437169791586432346912758289643571573291684164875293");
+		
+		boolean result = verifier.checkColumns();
+		
+		assertEquals("Failed to verify column integrity", true, result);	
+	}
+	
+	@Test
+	public void testSudokuColumnFail() {
+		SudokuVerifier verifier = new SudokuVerifier();
+		
+		verifier.buildMatrix(
+				  "417369825"
+				+ "432158947"
+				+ "958724316"
+				+ "825437169"
+				+ "791586432"
+				+ "346912758"
+				+ "289643571"
+				+ "573291684"
+				+ "164875293");
+		
+		boolean result = verifier.checkColumns();
+		
+		assertEquals("Should've been invalid column", false, result);	
+	}
+	
 	
 
 }
