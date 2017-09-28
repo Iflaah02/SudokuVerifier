@@ -1,4 +1,3 @@
-
 public class SudokuVerifier {
 	
 	private static int MAX_SIZE = 81;
@@ -8,9 +7,11 @@ public class SudokuVerifier {
 		if(hasInvalidNumberOfCharacters(candidateSolution) || hasInvalidCharacters(candidateSolution)) {
 			return -1;
 		}
-		
-		if(hasInvalidRows(candidateSolution)) {
+		else if(hasInvalidRows(candidateSolution)) {
 			return -3;
+		}
+		else if(hasInvalidCols(candidateSolution)) {
+			return -4;
 		}
 		
 		return 0;
@@ -53,6 +54,17 @@ public class SudokuVerifier {
 		return false;
 	}
 	
+	private boolean hasInvalidCols(String string) {
+		for(int i=1; i <= SET_SIZE; i++) {
+			String col = extractCol(string, i);
+			if(isInvalidSet(col)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 	private boolean isInvalidSet(String string) {
 		boolean[] frequenceVector = new boolean[SET_SIZE + 1];
 		char[] charArray = string.toCharArray();
@@ -69,5 +81,17 @@ public class SudokuVerifier {
 		}
 		
 		return false;
+	}
+	
+	private String extractCol(String string, int colIndex) {
+		int pos = colIndex - 1;
+		StringBuilder builder = new StringBuilder();
+		
+		while(pos < MAX_SIZE) {
+			builder.append(string.charAt(pos));
+			pos += SET_SIZE;
+		}
+		
+		return builder.toString();
 	}
 }

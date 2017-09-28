@@ -67,13 +67,27 @@ public class SudokuVerifierTest {
 	public void testVerify_duplicateCharactersInRowString_returnMinusThree() {
 		//init
 		SudokuVerifier verifier = new SudokuVerifier();
-		String incorectString = "414369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		String incorectString = "414369825432158967958724316825437169791586432346912758289643571573291684164875293";
 		
 		//Act
 		int result = verifier.verify(incorectString);
 		
 		//Assert
 		int expected = -3;
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testVerify_duplicateCharactersInColString_returnMinusFour() {
+		//init
+		SudokuVerifier verifier = new SudokuVerifier();
+		String incorectString = "417369825432158967958724316825437169791586432346912758289643571573291684164875293";
+		
+		//Act
+		int result = verifier.verify(incorectString);
+		
+		//Assert
+		int expected = -4;
 		assertEquals(expected, result);
 	}
 
