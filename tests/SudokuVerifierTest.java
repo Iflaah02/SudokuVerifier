@@ -32,6 +32,10 @@ public class SudokuVerifierTest {
 		int returnCode = sudoku.verify("123456789912345678891234567789123456678912345567891234456789123345678912234567891");
 		
 		assertEquals(returnCode, -2);
+		
+		returnCode = sudoku.verify("417369825632158947958724316825437169791586432289643571346912758573291684164875293");
+		
+		assertEquals(returnCode, -2);
 	}
 	
 	@Test

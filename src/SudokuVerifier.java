@@ -81,8 +81,19 @@ public class SudokuVerifier {
 	{
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				for (int k = 0; k < 3; k++) {
-					for (int l = 0; l < 3; l++) {
+				if(CheckGrid(testMatrix, i, j))
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean CheckGrid(int[][] testMatrix, int gridRow, int gridCol)
+	{
+		for (int i = 0 + gridRow * 3; i < 3 * (gridRow + 1); i++) {
+			for (int j = 0 + gridCol * 3; j < 3 * (gridCol + 1); j++) {
+				for (int k = 0 + gridRow * 3; k < 3 * (gridRow + 1); k++) {
+					for (int l = 0 + gridCol * 3; l < 3 * (gridCol + 1); l++) {
 						if ((i != k || j != l) && testMatrix[i][j] == testMatrix[k][l]) {
 							return true;
 						}
@@ -90,6 +101,6 @@ public class SudokuVerifier {
 				}
 			}
 		}
-		return false;
+		return false;		
 	}
 }
