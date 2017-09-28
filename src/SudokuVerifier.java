@@ -12,8 +12,9 @@ public class SudokuVerifier {
 	}
 	
 	public int verify(String candidateSolution) {
-		if(hasInvalidNumberOfCharacters(candidateSolution))
+		if(hasInvalidNumberOfCharacters(candidateSolution) || hasInvalidCharacters(candidateSolution)) {
 			return -1;
+		}
 		
 		return 0;
 	}
@@ -23,6 +24,18 @@ public class SudokuVerifier {
 		
 		if(string.length() != expectedStringLength) {
 			return true;
+		}
+		
+		return false;
+	}
+	
+	private boolean hasInvalidCharacters(String string) {
+		char[] charArray = string.toCharArray();
+		
+		for(char x : charArray) {
+			if( x < '0' || x > '9') {
+				return true;
+			}
 		}
 		
 		return false;
