@@ -10,7 +10,7 @@ public class SudokuVerifierTest {
 	@Test
 	public void testVerify_correctString_returnZero() {
 		//init
-		SudokuVerifier verifier = new SudokuVerifier(9, 9, 3);
+		SudokuVerifier verifier = new SudokuVerifier();
 		String incorectString = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
 		
 		//Act
@@ -24,7 +24,7 @@ public class SudokuVerifierTest {
 	@Test
 	public void testVerify_twoShortString_returnMinusOne() {
 		//init
-		SudokuVerifier verifier = new SudokuVerifier(9, 9, 3);
+		SudokuVerifier verifier = new SudokuVerifier();
 		String incorectString = "4173698256321589479587243168254371697915864323469127582896435715732916841648752";
 		
 		//Act
@@ -38,7 +38,7 @@ public class SudokuVerifierTest {
 	@Test
 	public void testVerify_twoLongString_returnMinusOne() {
 		//init
-		SudokuVerifier verifier = new SudokuVerifier(9, 9, 3);
+		SudokuVerifier verifier = new SudokuVerifier();
 		String incorectString = "41736982563215894795872431682543716979158643234691275828964357157329168416487529313458";
 		
 		//Act
@@ -52,7 +52,7 @@ public class SudokuVerifierTest {
 	@Test
 	public void testVerify_invalidCharactersString_returnMinusOne() {
 		//init
-		SudokuVerifier verifier = new SudokuVerifier(9, 9, 3);
+		SudokuVerifier verifier = new SudokuVerifier();
 		String incorectString = "41736982563215894795asd4316825437169791586432346912758289643571573291684164875293";
 		
 		//Act

@@ -1,15 +1,8 @@
 
 public class SudokuVerifier {
 	
-	private int rows;
-	private int cols;
-	private int squareDim;
-	
-	public SudokuVerifier(int rows, int cols, int squareDim) {
-		this.rows = rows;
-		this.cols = cols;
-		this.squareDim = squareDim;
-	}
+	private static int MAX_SIZE = 81;
+	private static int SET_SIZE = 9;
 	
 	public int verify(String candidateSolution) {
 		if(hasInvalidNumberOfCharacters(candidateSolution) || hasInvalidCharacters(candidateSolution)) {
@@ -20,9 +13,7 @@ public class SudokuVerifier {
 	}
 	
 	private boolean hasInvalidNumberOfCharacters(String string) {
-		int expectedStringLength = rows * cols;
-		
-		if(string.length() != expectedStringLength) {
+		if(string.length() != MAX_SIZE) {
 			return true;
 		}
 		
@@ -33,7 +24,7 @@ public class SudokuVerifier {
 		char[] charArray = string.toCharArray();
 		
 		for(char x : charArray) {
-			if( x < '0' || x > '9') {
+			if( x < '1' || x > Character.forDigit(SET_SIZE, 10)) {
 				return true;
 			}
 		}
