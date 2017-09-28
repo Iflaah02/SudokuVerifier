@@ -64,7 +64,7 @@ public class SudokuVerifier {
 				return true;
 			}
 			else {
-				frequenceVector[pos] = false;
+				frequenceVector[pos] = true;
 			}
 		}
 		
