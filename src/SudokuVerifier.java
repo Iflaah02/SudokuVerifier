@@ -7,6 +7,9 @@ public class SudokuVerifier {
 		if(hasInvalidNumberOfCharacters(candidateSolution) || hasInvalidCharacters(candidateSolution)) {
 			return -1;
 		}
+		else if(hasInvalidGrids(candidateSolution)) {
+			return -2;
+		}
 		else if(hasInvalidRows(candidateSolution)) {
 			return -3;
 		}
@@ -65,6 +68,19 @@ public class SudokuVerifier {
 		return false;
 	}
 
+	private boolean hasInvalidGrids(String string) {
+		for(int xIndex = 2; xIndex <= SET_SIZE; xIndex+=3) {
+			for(int yIndex = 2; yIndex <= SET_SIZE; yIndex+=3) {
+				String grid = extractGrid(string, xIndex, yIndex);
+				if(isInvalidSet(grid)) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	private boolean isInvalidSet(String string) {
 		boolean[] frequenceVector = new boolean[SET_SIZE + 1];
 		char[] charArray = string.toCharArray();
@@ -90,6 +106,22 @@ public class SudokuVerifier {
 		while(pos < MAX_SIZE) {
 			builder.append(string.charAt(pos));
 			pos += SET_SIZE;
+		}
+		
+		return builder.toString();
+	}
+	
+	private String extractGrid(String string, int centerX, int centerY) {
+		StringBuilder builder = new StringBuilder();
+		
+		for(int i = -1; i <= 1; i++) {
+			for(int j = -1; j<= 1; j++) {
+				int x = centerX + i;
+				int y = centerY + j;
+				int pos = (y - 1) * SET_SIZE + (x-1);
+				
+				builder.append(string.charAt(pos));
+			}
 		}
 		
 		return builder.toString();
