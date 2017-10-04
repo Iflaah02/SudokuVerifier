@@ -87,6 +87,18 @@ public class SudokuVerifierTest {
 		// Assert
 		assertEquals("164875293",sudokuRows.get(8));
 	}
+	//3. Test case for method to verify that digits only appear once in a string
+	@Test
+	public void checkVerifyCorrectSequence() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		ArrayList<String> sudokuRows = new ArrayList<String>();
+		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		assertTrue(sudoku.checkOnlyPositiveDigits(input));
+		sudokuRows = sudoku.splitSudokuStringRow(input);
+		// Assert
+		assertTrue(sudoku.verifyDigitsOnce(sudokuRows.get(0)));
+	}
 	@Test
 	public void checkVerifyWrongSequence() {
 		// Arrange
@@ -95,10 +107,129 @@ public class SudokuVerifierTest {
 		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
 		assertTrue(sudoku.checkOnlyPositiveDigits(input));
 		sudokuRows = sudoku.splitSudokuStringRow(input);
-		System.out.println(sudokuRows.get(0));
-		System.out.println(sudokuRows.get(0).length());
 		// Assert
 		assertTrue(sudoku.verifyDigitsOnce(sudokuRows.get(0)));
 	}
-
+	//4. Test case for method to split input in columns
+	@Test
+	public void checkSplitColumnNumbers() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		ArrayList<String> sudokuColumns = new ArrayList<String>();
+		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		assertTrue(sudoku.checkOnlyPositiveDigits(input));
+		sudokuColumns = sudoku.splitSudokuStringColumn(input);
+		
+		// Assert
+		assertEquals(9,sudokuColumns.size());
+	}
+	@Test
+	public void checkSplitFirstColumn() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		ArrayList<String> sudokuColumns = new ArrayList<String>();
+		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		assertTrue(sudoku.checkOnlyPositiveDigits(input));
+		sudokuColumns = sudoku.splitSudokuStringColumn(input);
+		
+		// Assert
+		assertEquals("469873251",sudokuColumns.get(0));
+	}
+	@Test
+	public void checkSplitLastColumn() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		ArrayList<String> sudokuColumns = new ArrayList<String>();
+		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		assertTrue(sudoku.checkOnlyPositiveDigits(input));
+		sudokuColumns = sudoku.splitSudokuStringColumn(input);
+		
+		// Assert
+		assertEquals("576928143",sudokuColumns.get(8));
+	}
+	//5. Test cases for method to split input in sub grid
+	@Test
+	public void checkSplitSubGridNumbers() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		ArrayList<String> sudokuSubGrid = new ArrayList<String>();
+		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		assertTrue(sudoku.checkOnlyPositiveDigits(input));
+		sudokuSubGrid = sudoku.splitSudokuStringSubgrid(input);
+		
+		// Assert
+		assertEquals(9,sudokuSubGrid.size());
+	}
+	@Test
+	public void checkSplitFirstSubGrid() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		ArrayList<String> sudokuSubGrid = new ArrayList<String>();
+		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		assertTrue(sudoku.checkOnlyPositiveDigits(input));
+		sudokuSubGrid = sudoku.splitSudokuStringSubgrid(input);
+		
+		// Assert
+		assertEquals("417632958",sudokuSubGrid.get(0));
+	}
+	@Test
+	public void checkSplitLastSubGrid() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		ArrayList<String> sudokuSubGrid = new ArrayList<String>();
+		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		assertTrue(sudoku.checkOnlyPositiveDigits(input));
+		sudokuSubGrid = sudoku.splitSudokuStringSubgrid(input);
+		
+		// Assert
+		assertEquals("571684293",sudokuSubGrid.get(8));
+	}
+	//11. Add test cases for method to validate whole Sudoku field for digits only once
+	@Test
+	public void checkVerifyCorrectSequenceTotal() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		ArrayList<String> sudokuRows = new ArrayList<String>();
+		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		assertTrue(sudoku.checkOnlyPositiveDigits(input));
+		sudokuRows = sudoku.splitSudokuStringRow(input);
+		// Assert
+		assertTrue(sudoku.verifyDigitsOnceAll(sudokuRows));
+	}
+	@Test
+	public void checkVerifyWrongSequenceTotal() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		ArrayList<String> sudokuRows = new ArrayList<String>();
+		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		assertTrue(sudoku.checkOnlyPositiveDigits(input));
+		sudokuRows = sudoku.splitSudokuStringRow(input);
+		// Assert
+		assertTrue(sudoku.verifyDigitsOnceAll(sudokuRows));
+	}
+	//12. Add test cases to check logic for verify method
+	@Test
+	public void checkVerifyCorrect() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		String input = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		// Assert
+		assertEquals(0,sudoku.verify(input));
+	}
+	@Test
+	public void checkVerifyNotOnlyDigits() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		String input = "41736982563215894A958724316825437169791586432346912758289643571573291684164875293";
+		// Assert
+		assertEquals(-1,sudoku.verify(input));
+	}
+	@Test
+	public void checkVerifyIncorrect() {
+		// Arrange
+		SudokuVerifier sudoku = new SudokuVerifier();
+		String input = "123456789912345678891234567789123456678912345567891234456789123345678912234567891";
+		// Assert
+		assertEquals(-2,sudoku.verify(input));
+	}
 }
