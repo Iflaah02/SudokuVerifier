@@ -1,16 +1,12 @@
 public class SudokuVerifier {
 	public int verify(String candidateSolution) {
+		int ret = 0;
 		for (int i = 0; i < 9; i++) {
-			int ret;
-			if(
-				(ret = verify_grid(candidateSolution, i)) < 0 ||
-				(ret = verify_row(candidateSolution, i)) < 0 ||
-				(ret = verify_column(candidateSolution, i)) < 0
-			) {
-				return ret;
+			if((ret = verify_all(candidateSolution, i)) < 0) {
+				break;
 			}
 		}
-		return 0;
+		return ret;
 	}
 	
 	public int verify_set(String set) {
@@ -59,5 +55,17 @@ public class SudokuVerifier {
 		}
 		int ret = verify_set(set);
 		return ret == -2 ? -4 : ret;
+	}
+	
+	public int verify_all(String candidateSolution, int location) {
+		int ret;
+		if(
+				(ret = verify_grid(candidateSolution, location)) < 0 ||
+				(ret = verify_row(candidateSolution, location)) < 0 ||
+				(ret = verify_column(candidateSolution, location)) < 0
+		) {
+				return ret;
+		}
+		return 0;
 	}
 }
