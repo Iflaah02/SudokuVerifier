@@ -4,9 +4,8 @@ import java.util.Set;
 public class SudokuVerifier {
 	
 	public int verify(String candidateSolution) {
-
-		if(!testOfLength(candidateSolution)) return -1;
-		if(!testOfNumbers(candidateSolution)) return -1;
+		
+		if(!testOfLengthAndNumbers(candidateSolution)) return -1;
 		if(!testOfSubgrids(candidateSolution)) return -2;
 		if(!testOfRows(candidateSolution)) return -3;
 		if(!testOfColumns(candidateSolution)) return -4;
@@ -16,6 +15,16 @@ public class SudokuVerifier {
 		
 		
 	}
+
+
+	//Refactored Consolidate Conditionals for testOfLength and testOfNumbers
+	private boolean testOfLengthAndNumbers(String candidateSolution) {
+		if(!testOfLength(candidateSolution)) return false;
+		else if(!testOfNumbers(candidateSolution)) return false;
+		else return true;
+	}
+
+
 	
 	private boolean testOfLength(String testable){
 		boolean test;

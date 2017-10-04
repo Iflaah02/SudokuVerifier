@@ -43,52 +43,9 @@ public class SudokuVerifierParametrizedTest {
 		//Act
 		
 		//Assert
-		System.out.println("inputString: " + inputString);
-		assertEquals("Correct String returns 0",errorCode, verifier.verify(inputString));
-
+		
+		assertEquals("Wrong Error code received: ",errorCode, verifier.verify(inputString));
 	}
 	
-	@Test
-	public void testVerify_NumberFormat0_9() {
-		//Arrange
-		SudokuVerifier verifier = new SudokuVerifier();
-		
-		//Assert
-		System.out.println("inputString: " + inputString);
-		assertEquals("Only numbers 1-9 should be allowed", errorCode, verifier.verify(inputString));
-
-
-	}
 	
-	@Test
-	public void testVerify_subGrid0_9() {
-		//Arrange
-		SudokuVerifier verifier = new SudokuVerifier();
-		
-		//Assert
-		System.out.println("inputString: " + inputString);
-		assertEquals("Each subgrid can only contain one of each number", errorCode, verifier.verify(inputString));
-		
-	}
-	
-	@Test
-	public void testVerify_Rows0_9() {
-		//Arrange
-		SudokuVerifier verifier = new SudokuVerifier();
-		
-		//Assert
-		System.out.println("inputString: " + inputString);
-		assertEquals("Each row can only contain one of each number", errorCode, verifier.verify(inputString));
-	}
-	
-	@Test
-	public void testVerify_Columns0_9() {
-		//Arrange
-		SudokuVerifier verifier = new SudokuVerifier();
-		
-		//Assert
-		System.out.println("inputString: " + inputString);
-		assertEquals("Each column can only contain one of each number", errorCode, verifier.verify(inputString));
-	}
-
 }
