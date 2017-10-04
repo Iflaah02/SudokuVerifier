@@ -13,7 +13,7 @@ public class SudokuVerifierTest {
 		
 		boolean result = verifier.verifyString("1");
 		
-		assertEquals("String should've been wrong", false, result);
+		assertFalse("String should've been wrong", result);
 	}
 	
 	@Test
@@ -22,7 +22,7 @@ public class SudokuVerifierTest {
 		
 		boolean result = verifier.verifyString("asd");
 		
-		assertEquals("String should've been wrong", false, result);
+		assertFalse("String should've been wrong", result);
 	}
 	
 	@Test
@@ -31,7 +31,7 @@ public class SudokuVerifierTest {
 		
 		boolean result = verifier.verifyString("4173698256321589479587243168254371697915864323469127582896435715732916841648752931");
 		
-		assertEquals("String should've been wrong", false, result);
+		assertFalse("String should've been wrong", result);
 	
 	}
 	
@@ -41,7 +41,7 @@ public class SudokuVerifierTest {
 		
 		boolean result = verifier.verifyString("417369825632158947958724316825437169791586432346912758289643571573291684164875293");
 		
-		assertEquals("String should've been right", true, result);
+		assertTrue("String should've been right", result);
 	
 	}
 	
@@ -51,7 +51,7 @@ public class SudokuVerifierTest {
 		
 		boolean result = verifier.verifyString("417369825632158947950724316825437169791586432346912758289643571573291684164875293");
 		
-		assertEquals("String should've been wrong", false, result);
+		assertFalse("String should've been wrong", result);
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ public class SudokuVerifierTest {
 		
 		boolean result = verifier.checkRows();
 		
-		assertEquals("Failed to verify row integrity", true, result);	
+		assertTrue("Failed to verify row integrity", result);	
 	}
 	
 	@Test
@@ -87,7 +87,7 @@ public class SudokuVerifierTest {
 		
 		boolean result = verifier.checkRows();
 		
-		assertEquals("Should've been invalid row", false, result);	
+		assertFalse("Should've been invalid row", result);	
 	}
 	
 	@Test
@@ -98,7 +98,7 @@ public class SudokuVerifierTest {
 		
 		boolean result = verifier.checkColumns();
 		
-		assertEquals("Failed to verify column integrity", true, result);	
+		assertTrue("Failed to verify column integrity", result);	
 	}
 	
 	@Test
@@ -118,9 +118,47 @@ public class SudokuVerifierTest {
 		
 		boolean result = verifier.checkColumns();
 		
-		assertEquals("Should've been invalid column", false, result);	
+		assertFalse("Should've been invalid column", result);	
 	}
 	
+	@Test
+	public void testSudokuGridSucceed() {
+		SudokuVerifier verifier = new SudokuVerifier();
+		
+		verifier.buildMatrix("417369825632158947958724316825437169791586432346912758289643571573291684164875293");
+		
+		boolean result = verifier.checkGrids();
+		assertTrue("Should've been true", result);
+	}
+	
+	@Test
+	public void testSudokuGridFail() {
+		SudokuVerifier verifier = new SudokuVerifier();
+		
+		verifier.buildMatrix("123456789912345678891234567789123456678912345567891234456789123345678912234567891");
+		
+		boolean result = verifier.checkGrids();
+		assertFalse("Should've been false", result);
+	}
+	
+	@Test
+	public void testWholeSudokuFail() {
+		SudokuVerifier verifier = new SudokuVerifier();
+		
+		int result = verifier.verify("123456789912345678891234567789123456678912345567891234456789123345678912234567891");
+
+		assertEquals("Should've been -2", -2, result);
+	}
+	
+	
+	@Test
+	public void testWholeSudokuSucceed() {
+		SudokuVerifier verifier = new SudokuVerifier();
+		
+		int result = verifier.verify("417369825632158947958724316825437169791586432346912758289643571573291684164875293");
+
+		assertEquals("Should've been 0", 0, result);
+	}
 	
 
 }

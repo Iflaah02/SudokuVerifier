@@ -1,10 +1,26 @@
 
 public class SudokuVerifier {
 	int[][] sudokuMatrix = new int[9][9];
+	
 	public int verify(String candidateSolution) {
 		// returns 0 if the candidate solution is correct
 		if (!verifyString(candidateSolution)) {
 			return -1;
+		}
+		buildMatrix(candidateSolution);
+		
+		return verifyMatrix();
+	}
+	
+	public int verifyMatrix() {
+		if ( !checkGrids() )	 {
+			return -2;
+		}
+		if ( !checkRows() )	{
+			return -3;
+		}
+		if ( !checkColumns() )	{
+			return -4;
 		}
 		
 		return 0;
@@ -19,6 +35,7 @@ public class SudokuVerifier {
 		return true;
 	}
 	
+	//Takes the first chracter in the string and puts its numeric value to the array
 	public void buildMatrix(String sudoku) {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -55,7 +72,17 @@ public class SudokuVerifier {
 	}
 	
 	public boolean checkGrids() {
-		
-		throw new UnsupportedOperationException("Not implemented");
+		for ( int i = 0; i < 9; i += 3) {
+			for ( int j = 0; j < 9; j += 3) {
+				for ( int pos = 0; pos < 9; pos++) {
+					for ( int pos2 = pos + 1; pos2 < 9; pos2++) {
+						if( this.sudokuMatrix[i + pos%3][j + pos/3] == this.sudokuMatrix[i + pos2%3][j + pos2/3]) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
 	}
 }
