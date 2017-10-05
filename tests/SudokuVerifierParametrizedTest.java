@@ -27,13 +27,33 @@ public class SudokuVerifierParametrizedTest {
 	}
 	
 	@Test
-	public void testVerify_invalidSolution() {
+	public void testVerify_invalidSubgrids() {
 		SudokuVerifier ver = new SudokuVerifier();
-		String solution = "417369825632158947958724316825437169791586432346912758289643571573291684164875292";
+		String solution = "123456789234567891345678912456789123567891234678912345789123456891234567912345678";
 		
 		int value = ver.verify(solution);
 		
-		assertEquals("Correct solution is deemed incorrect", -2, value);
+		assertEquals("Incorrect solution is deemed correct, problem with subgrids", -2, value);
+	}
+	
+	@Test
+	public void testVerify_invalidColumns() {
+		SudokuVerifier ver = new SudokuVerifier();
+		String solution = "123456789456789123789123456123456789456789123789123456123456789456789123789123456";
+		
+		int value = ver.verify(solution);
+		
+		assertEquals("Incorrect solution is deemed correct, problem with columns", -4, value);
+	}
+	
+	@Test
+	public void testVerify_invalidRows() {
+		SudokuVerifier ver = new SudokuVerifier();
+		String solution = "147147147258258258369369369147147147258258258369369369147147147258258258369369369";
+		
+		int value = ver.verify(solution);
+		
+		assertEquals("Incorrect solution is deemed correct, problem with rows", -3, value);
 	}
 	
 	
@@ -177,6 +197,69 @@ public class SudokuVerifierParametrizedTest {
 		
 		assertEquals("Accepted string with repeating characters", false, value);
 		
+	}
+	
+	@Test
+	public void testCheckSubgrids_validSubgrids() {
+		SudokuVerifier ver = new SudokuVerifier();
+		String solution = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		
+		boolean value = ver.checkSubGrids(solution);
+		
+		assertEquals("Valid subgrids were not accepted", true, value);
+		
+	}
+	
+	@Test
+	public void testCheckSubgrids_invalidSubgrids() {
+		SudokuVerifier ver = new SudokuVerifier();
+		String solution = "123456789912345678891234567789123456678912345567891234456789123345678912234567891";
+		
+		boolean value = ver.checkSubGrids(solution);
+		
+		assertEquals("Invalid subgrids accepted", false, value);
+	}
+	
+	@Test
+	public void testCheckColumns_validColumns() {
+		SudokuVerifier ver = new SudokuVerifier();
+		String solution = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		
+		boolean value = ver.checkColumns(solution);
+		
+		assertEquals("Valid columns were not accepted", true, value);
+		
+	}
+	
+	@Test
+	public void testCheckColumns_invalidColumns() {
+		SudokuVerifier ver = new SudokuVerifier();
+		String solution = "923456789912345678891234567789123456678912345567891234456789123345678912234567891";
+		
+		boolean value = ver.checkColumns(solution);
+		
+		assertEquals("Invalid columns accepted", false, value);
+	}
+	
+	@Test
+	public void testCheckRows_validRows() {
+		SudokuVerifier ver = new SudokuVerifier();
+		String solution = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		
+		boolean value = ver.checkRows(solution);
+		
+		assertEquals("Valid rows were not accepted", true, value);
+		
+	}
+	
+	@Test
+	public void testCheckRows_invalidRows() {
+		SudokuVerifier ver = new SudokuVerifier();
+		String solution = "123456789912345778891234567789123456678912345567891234456789123345678912234567891";
+		
+		boolean value = ver.checkRows(solution);
+		
+		assertEquals("Invalid rows accepted", false, value);
 	}
 	
 }
