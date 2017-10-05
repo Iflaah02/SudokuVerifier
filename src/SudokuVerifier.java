@@ -3,26 +3,52 @@ import java.util.List;
 
 public class SudokuVerifier {
 	
-	private List<SudokuValidator> validatorList;
+	private List<SudokuInputValidator> inputValidatorList;
+	private List<SudokuBoardValidator> boardValidatorList;
 	
 	public SudokuVerifier() {
-		validatorList = new LinkedList<SudokuValidator>();
+		inputValidatorList = new LinkedList<SudokuInputValidator>();
+		inputValidatorList.add(new SudokuLengthValidator());
+		inputValidatorList.add(new SudokuCharValidator());
 		
-		validatorList.add(new SudokuLengthValidator());
-		validatorList.add(new SudokuCharValidator());
-		validatorList.add(new SudokuGridValidator());
-		validatorList.add(new SudokuRowValidator());
-		validatorList.add(new SudokuColValidator());
+		boardValidatorList = new LinkedList<SudokuBoardValidator>();
+		boardValidatorList.add(new SudokuBoardValidator(new GridValidationStrategy()));
+		boardValidatorList.add(new SudokuBoardValidator(new RowValidationStrategy()));
+		boardValidatorList.add(new SudokuBoardValidator(new ColValidationStrategy()));
 	}
 	
 	public int verify(String candidateSolution) throws Exception {
-		SudokuState state = SudokuState.VALID;
+		SudokuState state = validateInputString(candidateSolution);
 		
-		for(int i = 0; i < validatorList.size() && state == SudokuState.VALID; i++) {
-			SudokuValidator validator = validatorList.get(i);
+		//Create board and validate against Sudoku rules
+		if(state == SudokuState.VALID) {
+			SudokuBoard board = new SudokuBoard(candidateSolution);
+			state = validateBoard(board);
+		}
+			
+		return SudokuStateCodeGenerator.getStateCode(state);
+	}
+	
+	private SudokuState validateInputString(String candidateSolution) {		
+		SudokuState state = SudokuState.VALID;
+	
+		//Validate the input string to contain correct characters and be of right length
+		for(int i = 0; i < inputValidatorList.size() && state == SudokuState.VALID; i++) {
+			SudokuInputValidator validator = inputValidatorList.get(i);
 			state = validator.validate(candidateSolution);
 		}
 		
-		return SudokuStateCodeGenerator.getStateCode(state);
+		return state;
+	}
+	
+	private SudokuState validateBoard(SudokuBoard board) {
+		SudokuState state = SudokuState.VALID;
+		
+		for(int i = 0; i < boardValidatorList.size() && state == SudokuState.VALID; i++) {
+			SudokuBoardValidator validator = boardValidatorList.get(i);
+			state = validator.validate(board);
+		}
+		
+		return state;
 	}
 }

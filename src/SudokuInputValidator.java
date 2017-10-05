@@ -1,4 +1,4 @@
 
-public interface SudokuValidator {
+public interface SudokuInputValidator {
 	SudokuState validate(String sudokuRepresentation);
 }

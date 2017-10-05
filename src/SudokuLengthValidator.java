@@ -1,5 +1,5 @@
 
-public class SudokuLengthValidator implements SudokuValidator{
+public class SudokuLengthValidator implements SudokuInputValidator{
 
 	private static int ALLOWED_LENGTH = 81;
 	

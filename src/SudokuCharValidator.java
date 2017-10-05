@@ -1,5 +1,5 @@
 
-public class SudokuCharValidator implements SudokuValidator {
+public class SudokuCharValidator implements SudokuInputValidator {
 
 	private static char MIN_CHAR = '1';
 	private static char MAX_CHAR = '9';
