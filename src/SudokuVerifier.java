@@ -1,49 +1,62 @@
+import java.util.Arrays;
+
 public class SudokuVerifier {
 	
-	public boolean checkInputValidity (String candidateSolution) {
-		return candidateSolution.length() == 81 && candidateSolution.matches("\\d+");
+	private boolean checkInputValidity (String candidateSolution) {
+		return candidateSolution.length() == 81 && candidateSolution.matches("[1-9]+");
 	}
 	
-	private boolean checkUniqueInRange (checkRange range, String str) {
-		boolean noRepeat = true;
-		for (int i= range.start; i< range.end; i++) { // try with pattern
-			if (i != range.pos && str.charAt(i) == str.charAt(range.pos)) {
-				noRepeat = false;
-				break;
-			}
+	private int [][] stringTo2DArray (String candidateSolution){
+		int size = (int) Math.sqrt(candidateSolution.length());
+		int [][] sodukuBoard = new int [size][size];
+		for (int i=0; i<candidateSolution.length(); i++){
+			sodukuBoard[i%9][i/9] = Character.getNumericValue(candidateSolution.charAt(i));
 		}
-		return noRepeat;
+		return sodukuBoard;
 	}
 	
-	private boolean checkRule2 (String candidateSolution) {
-		boolean pass = true;
-		while (pass) {
-			for (int i=0; i<candidateSolution.length();i++) { // make use of checkUniqueInRange
-				
-			}
+	private boolean checkUniqueInSubSoduku (int[] subSoduku) {
+	    int i = 0;
+	    Arrays.sort(subSoduku);
+	    for (int num : subSoduku) {
+	        if (num != ++i)
+	            return false;
+	    }
+	    return true;
+	}
+	
+	private int verifyBoard (int [][] SodukuBoard ) {
+		
+		for (int i = 0; i < 9; i++) {
 			
-		}
-		return pass;
-	}
-	
-	private boolean checkRule3 (String candidateSolution) {
-		return 1==2;
-	}
-	
-	private boolean checkRule4 (String candidateSolution) {
-		return 1==2;
+	        int[] subGrid = new int[9];
+	        int[] horizental = new int[9];
+	        int[] vertical = SodukuBoard[i].clone();
+	        
+	        for (int j = 0; j < 9; j ++) {
+	        	horizental[j] = SodukuBoard[j][i];
+	        	subGrid[j] = SodukuBoard[j/3 + (i/3)*3][j%3 + i*3%9];
+	        }	        
+	        if (!checkUniqueInSubSoduku(subGrid)){ // check for rule#2
+				return -2;
+			}else if (!checkUniqueInSubSoduku(horizental)){
+				return -3;
+			}else if (!checkUniqueInSubSoduku(vertical)){
+				return -4;
+			}
+	        
+	    }
+
+		return 0;
 	}
 	
 	public int verify(String candidateSolution) {
-		if (!checkInputValidity(candidateSolution)) { // Invalid input
+		
+		if (!checkInputValidity(candidateSolution)) {
 			return -1;
-		}else if (!checkRule2(candidateSolution)){ // check for rule#2
-			return -2;
-		}else if (!checkRule3(candidateSolution)){
-			return -3;
-		}else if (!checkRule4(candidateSolution)){
-			return -4;
+		} else {
+			return verifyBoard(stringTo2DArray(candidateSolution));
 		}
-		return 0;
 	}
+	    
 }
