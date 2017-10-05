@@ -11,26 +11,71 @@ public class SudokuVerifierTest {
 	@Test
 	public void testrule1() {
 		SudokuVerifier obj = new SudokuVerifier();
-		int ret = obj.verify("4634-6346464363464343643433366446666");
+		int ret = obj.verify("4173698256320");
 		
 		assertEquals(-1, ret);
 		
 	}
 	
-	@Test
-	public void testrule3() {
+/*	@Test
+	public void testRule2WithCorrectSudoku() {
 		SudokuVerifier obj = new SudokuVerifier();
-		int ret = obj.verify("4173698256321589479587243168254371697915864323469127582896435715732916841" + 
-				"64875293");
 		
+		String solution = "4173698256321589479587243168254371697915864323469127582896435715732916841" + 
+				"64875293";
+		char[] testSolution = solution.toCharArray();
+		obj.initGrid(testSolution);
+		int ret = obj.checkSubGridViolation();
 		assertEquals(0, ret);
-		
-		ret = obj.verify("44444444444444444444444444444444444444444444444444444444444444444444444444444" + 
-				"44444444");
+	} */
+	
+	@Test
+	public void testRule3WithIncorrectSudoku() {
+		SudokuVerifier obj = new SudokuVerifier();
+		String solution = "4173698286321589479587243168254371697915864323469127582896435715732916841" + 
+				"64875293";
+		char[] testSolution = solution.toCharArray();
+		obj.initGrid(testSolution);		
+		int ret = obj.checkRowViolation(obj.getTable());
 		
 		assertEquals(-3, ret);
+	}
+	
+	@Test
+	public void testrule3WithCorrectSudoku() {
+		SudokuVerifier obj = new SudokuVerifier();
+		String solution = "4173698256321589479587243168254371697915864323469127582896435715732916841" + 
+				"64875293";
+		char[] testSolution = solution.toCharArray();		
+		obj.initGrid(testSolution);		
+		int ret = obj.checkRowViolation(obj.getTable());		
+		assertEquals(0, ret);
+					
+	}
+	
+	@Test
+	public void testRule4WithCorrectSudoku() {
+		SudokuVerifier obj = new SudokuVerifier();
 		
+		String solution = "4173698256321589479587243168254371697915864323469127582896435715732916841" + 
+				"64875293";
+		char[] testSolution = solution.toCharArray();
+		obj.initGrid(testSolution);
+		int ret = obj.checkColumnViolation(obj.getTable());
+		assertEquals(0, ret);
+	}
+	
+	@Test
+	public void testRule4WithIncorrectSudoku() {
+		SudokuVerifier obj = new SudokuVerifier();		
+				
+		String solution = "4173698254321589479587243168254371697915864323469127582896435715732916841" + 
+				"64875293";
+		char[] testSolution = solution.toCharArray();
+		obj.initGrid(testSolution);	
+		int ret = obj.checkColumnViolation(obj.getTable());
 		
+		assertEquals(-4, ret);
 	}
 	
 	
