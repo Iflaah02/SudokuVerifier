@@ -4,7 +4,7 @@ public class SudokuVerifier {
 	
 	public int verify(String candidateSolution) {
 		
-		if(!OnlyNumbers(candidateSolution) || candidateSolution.length() != 81)
+		if(BasicVerifier(candidateSolution))
 			return -1;
 		
 		matrix = fillMatrix(candidateSolution);
@@ -49,6 +49,13 @@ public class SudokuVerifier {
 	    return true;		
 	}
 	
+	// Checks that given string doesn't contain non-digit characters and that string is exactly 81 characters long
+	public boolean BasicVerifier(String string)
+	{
+		return (!OnlyNumbers(string) || string.length() != 81);
+	}
+	
+	
 	public boolean CheckRows(int[][] testMatrix)
 	{
 		for (int i = 0; i < 9; i++) {
@@ -77,6 +84,7 @@ public class SudokuVerifier {
 		return false;
 	}
 	
+	// Loops through the different grids in the matrix
 	public boolean CheckGrids(int[][] testMatrix)
 	{
 		for (int i = 0; i < 3; i++) {
@@ -88,6 +96,7 @@ public class SudokuVerifier {
 		return false;
 	}
 	
+	// Verifies a single grid
 	public boolean CheckGrid(int[][] testMatrix, int gridRow, int gridCol)
 	{
 		for (int i = 0 + gridRow * 3; i < 3 * (gridRow + 1); i++) {
