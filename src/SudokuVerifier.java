@@ -1,25 +1,32 @@
 import java.util.regex.Pattern;
 
 public class SudokuVerifier {
+	String[] rows;
+	String[] columns;
+	String[][] board;
 	
-	public static int verify(String candidateSolution) {
+	public void setUp(String candidateSolution) {
+		rows = candidateSolution.split("(?<=\\G.{9})");
+		columns = new String[9];
+		board = new String[9][9];
+		
+		for (int i=0; i<rows.length; i++) {                // getting sudoku board
+			board[i] = rows[i].split("(?<=\\G.{1})");
+		}
+		for (int i=0; i<columns.length; i++) {            // getting columns
+			columns[i] = board[0][i]+board[1][i]+board[2][i]+board[3][i]+board[4][i]+
+					board[5][i]+board[6][i]+board[7][i]+board[8][i];
+		}
+	}
+	
+	public int verify(String candidateSolution) {
 
 		if(candidateSolution.length() != 81) {
 			return -5;
 		} else if(!candidateSolution.matches("[0-9]+")) {
 			return -1;
 		} else {
-			String[] rows = candidateSolution.split("(?<=\\G.{9})");
-			String[] columns = new String[9];
-			String[][] board = new String[9][9];
-
-			for (int i=0; i<rows.length; i++) {                // getting sudoku board
-				board[i] = rows[i].split("(?<=\\G.{1})");
-			}
-			for (int i=0; i<columns.length; i++) {            // getting columns
-				columns[i] = board[0][i]+board[1][i]+board[2][i]+board[3][i]+board[4][i]+
-						board[5][i]+board[6][i]+board[7][i]+board[8][i];
-			}
+			setUp(candidateSolution);
 
 			if (!checkGrids(board)) {
 				return -2;
@@ -33,7 +40,7 @@ public class SudokuVerifier {
 		return 0;
 	}
 
-	private static boolean checkRows(String[] rows) {
+	private boolean checkRows(String[] rows) {
 		for(String row : rows) {
 			for(int i=1;i<=9;i++) {
 				if(row.indexOf(String.valueOf(i)) != row.lastIndexOf(String.valueOf(i))) {
@@ -45,7 +52,7 @@ public class SudokuVerifier {
 		return true;
 	}
 
-	private static boolean checkGrids(String[][] board) {
+	private boolean checkGrids(String[][] board) {
 		for(int i = 0; i<7; i+=3) {
 			for(int j=0; j<7; j+=3) {
 				String gridStr = board[i][j]+board[i][j+1]+board[i][j+2]+

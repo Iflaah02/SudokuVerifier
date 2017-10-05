@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import static org.hamcrest.CoreMatchers.is;
@@ -10,7 +11,7 @@ import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class SudokuVerifierParametrizedTest {
-
+	SudokuVerifier verifier;
 	private String candidateSolution;
 	private int expected;
 
@@ -31,9 +32,14 @@ public class SudokuVerifierParametrizedTest {
 		};
 	}
 
+	@Before
+	public void init() {
+		verifier = new SudokuVerifier();
+	}
+	
 	@Test
 	public void test() {
-		assertThat(SudokuVerifier.verify(candidateSolution), is(expected));
+		assertThat(verifier.verify(candidateSolution), is(expected));
 	}
 
 }
