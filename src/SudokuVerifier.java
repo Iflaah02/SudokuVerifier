@@ -1,129 +1,28 @@
+import java.util.LinkedList;
+import java.util.List;
+
 public class SudokuVerifier {
 	
-	private static int MAX_SIZE = 81;
-	private static int SET_SIZE = 9;
+	private List<SudokuValidator> validatorList;
 	
-	public int verify(String candidateSolution) {
-		if(hasInvalidNumberOfCharacters(candidateSolution) || hasInvalidCharacters(candidateSolution)) {
-			return -1;
-		}
-		else if(hasInvalidGrids(candidateSolution)) {
-			return -2;
-		}
-		else if(hasInvalidRows(candidateSolution)) {
-			return -3;
-		}
-		else if(hasInvalidCols(candidateSolution)) {
-			return -4;
-		}
+	public SudokuVerifier() {
+		validatorList = new LinkedList<SudokuValidator>();
 		
-		return 0;
+		validatorList.add(new SudokuLengthValidator());
+		validatorList.add(new SudokuCharValidator());
+		validatorList.add(new SudokuGridValidator());
+		validatorList.add(new SudokuRowValidator());
+		validatorList.add(new SudokuColValidator());
 	}
 	
-	private boolean hasInvalidNumberOfCharacters(String string) {
-		if(string.length() != MAX_SIZE) {
-			return true;
+	public int verify(String candidateSolution) throws Exception {
+		SudokuState state = SudokuState.VALID;
+		
+		for(int i = 0; i < validatorList.size() && state == SudokuState.VALID; i++) {
+			SudokuValidator validator = validatorList.get(i);
+			state = validator.validate(candidateSolution);
 		}
 		
-		return false;
-	}
-	
-	private boolean hasInvalidCharacters(String string) {
-		char[] charArray = string.toCharArray();
-		
-		for(char x : charArray) {
-			if( x < '1' || x > Character.forDigit(SET_SIZE, 10)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	private boolean hasInvalidRows(String string) {
-		int startIndex = 0;
-		int endIndex = SET_SIZE;
-		
-		while(endIndex <= string.length()) {
-			String row = string.substring(startIndex, endIndex);
-			if(isInvalidSet(row)) {
-				return true;
-			}
-			
-			startIndex = endIndex;
-			endIndex = endIndex + SET_SIZE;
-		}
-		
-		return false;
-	}
-	
-	private boolean hasInvalidCols(String string) {
-		for(int i=1; i <= SET_SIZE; i++) {
-			String col = extractCol(string, i);
-			if(isInvalidSet(col)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-
-	private boolean hasInvalidGrids(String string) {
-		for(int xIndex = 2; xIndex <= SET_SIZE; xIndex+=3) {
-			for(int yIndex = 2; yIndex <= SET_SIZE; yIndex+=3) {
-				String grid = extractGrid(string, xIndex, yIndex);
-				if(isInvalidSet(grid)) {
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
-	
-	private boolean isInvalidSet(String string) {
-		boolean[] frequenceVector = new boolean[SET_SIZE + 1];
-		char[] charArray = string.toCharArray();
-		
-		for(char x : charArray) {
-			int pos = (x - '0');
-			
-			if(frequenceVector[pos] == true) {
-				return true;
-			}
-			else {
-				frequenceVector[pos] = true;
-			}
-		}
-		
-		return false;
-	}
-	
-	private String extractCol(String string, int colIndex) {
-		int pos = colIndex - 1;
-		StringBuilder builder = new StringBuilder();
-		
-		while(pos < MAX_SIZE) {
-			builder.append(string.charAt(pos));
-			pos += SET_SIZE;
-		}
-		
-		return builder.toString();
-	}
-	
-	private String extractGrid(String string, int centerX, int centerY) {
-		StringBuilder builder = new StringBuilder();
-		
-		for(int i = -1; i <= 1; i++) {
-			for(int j = -1; j<= 1; j++) {
-				int x = centerX + i;
-				int y = centerY + j;
-				int pos = (y - 1) * SET_SIZE + (x-1);
-				
-				builder.append(string.charAt(pos));
-			}
-		}
-		
-		return builder.toString();
+		return SudokuStateCodeGenerator.getStateCode(state);
 	}
 }
