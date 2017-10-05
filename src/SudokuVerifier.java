@@ -27,16 +27,19 @@ public class SudokuVerifier {
 			return -1;
 		} else {
 			setUp(candidateSolution);
-
-			if (!checkGrids(board)) {
-				return -2;
-			} else if (!checkRows(rows)) {
-				return -3;
-			} else if (!checkRows(columns)) {
-				return -4;
-			}
+			return checkSudokuParameters(); 
 		}
-
+	}
+	
+	//Consolidate conditions refactoring:
+	int checkSudokuParameters() {
+		if (!checkGrids(board)) {
+			return -2;
+		} else if (!checkRows(rows)) {
+			return -3;
+		} else if (!checkRows(columns)) {
+			return -4;
+		}
 		return 0;
 	}
 
