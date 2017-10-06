@@ -45,8 +45,6 @@ public class SudokuVerifier {
 	}
 	
 	protected boolean duplicatesInArray(final int[] input_array) {
-		// https://stackoverflow.com/questions/3951547/java-array-finding-duplicates
-		
 		return sudokuVerifierVerifyHelpers.duplicatesInArray(input_array);
 	}
 	

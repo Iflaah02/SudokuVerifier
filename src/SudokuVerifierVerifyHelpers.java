@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 public class SudokuVerifierVerifyHelpers {
 	public boolean duplicatesInArray(final int[] input_array) {
+		// https://stackoverflow.com/questions/3951547/java-array-finding-duplicates
 		Set<Integer> lump = new HashSet<Integer>();
 		for (int i : input_array) {
 			if (lump.contains(i))
