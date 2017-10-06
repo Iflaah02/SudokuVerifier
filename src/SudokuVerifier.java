@@ -94,36 +94,36 @@ public class SudokuVerifier {
 	
 	public int verify(String candidateSolution) {
 		
-		int[][] sudokuGrid;
+		int[][] sudoku;
 		
 		try {
-			sudokuGrid = make_sudoku_grid(candidateSolution);
+			sudoku = make_sudoku_grid(candidateSolution);
 		} catch (IncorrectLengthException | NotOnlyIntegersException e) {
 			return -1;
 		}
 		
 		try {
-			verify_rows(sudokuGrid);
+			verify_rows(sudoku);
 		} catch (IncorrectRowException e) {
 			return -3;
 		}
 		
 		try {
-			verify_cols(sudokuGrid);
+			verify_cols(sudoku);
 		} catch (IncorrectColException e) {
 			return -4;
 		}
 		
 		try {
-			verify_sub_grid(sudokuGrid, 1, 1);
-			verify_sub_grid(sudokuGrid, 1, 4);
-			verify_sub_grid(sudokuGrid, 1, 7);
-			verify_sub_grid(sudokuGrid, 4, 1);
-			verify_sub_grid(sudokuGrid, 4, 4);
-			verify_sub_grid(sudokuGrid, 4, 7);
-			verify_sub_grid(sudokuGrid, 7, 1);
-			verify_sub_grid(sudokuGrid, 7, 4);
-			verify_sub_grid(sudokuGrid, 7, 7);
+			verify_sub_grid(sudoku, 1, 1);
+			verify_sub_grid(sudoku, 1, 4);
+			verify_sub_grid(sudoku, 1, 7);
+			verify_sub_grid(sudoku, 4, 1);
+			verify_sub_grid(sudoku, 4, 4);
+			verify_sub_grid(sudoku, 4, 7);
+			verify_sub_grid(sudoku, 7, 1);
+			verify_sub_grid(sudoku, 7, 4);
+			verify_sub_grid(sudoku, 7, 7);
 		} catch (IncorrectSubGridException e) {
 			return -2;
 		}
