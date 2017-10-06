@@ -7,19 +7,19 @@ public class SudokuVerifier {
 	private static int INPUT_LENGTH = 81;
 	private int[][] sudoku;
 	
-	public void validate_input_length(String input_string) throws IncorrectLengthException {
+	protected void validate_input_length(String input_string) throws IncorrectLengthException {
 		if(input_string.length() != INPUT_LENGTH) {
 			throw new IncorrectLengthException();
 		}
 	}
 	
-	public void validate_input_contains_positive_integers(String input_string) throws NotOnlyIntegersException {
+	protected void validate_input_contains_positive_integers(String input_string) throws NotOnlyIntegersException {
 		if(!input_string.matches("[0-9]+")) {
 			throw new NotOnlyIntegersException();
 		}
 	}
 	
-	public int[] string_array_to_int_array(String input_string) throws NotOnlyIntegersException, IncorrectLengthException {
+	protected int[] string_array_to_int_array(String input_string) throws NotOnlyIntegersException, IncorrectLengthException {
 		validate_input_length(input_string);
 		validate_input_contains_positive_integers(input_string);
 		
@@ -29,7 +29,7 @@ public class SudokuVerifier {
 		return intInputArray;
 	}
 	
-	public int[][] make_sudoku_grid(String input_string) throws IncorrectLengthException, NotOnlyIntegersException {
+	protected int[][] make_sudoku_grid(String input_string) throws IncorrectLengthException, NotOnlyIntegersException {
 		
 		int[] intArray = string_array_to_int_array(input_string);
 		int[][] sudokuArray = new int[9][9];
@@ -43,7 +43,7 @@ public class SudokuVerifier {
 		return sudokuArray;
 	}
 	
-	public boolean duplicatesInArray(final int[] input_array) {
+	protected boolean duplicatesInArray(final int[] input_array) {
 		// https://stackoverflow.com/questions/3951547/java-array-finding-duplicates
 		
 		Set<Integer> lump = new HashSet<Integer>();
@@ -55,7 +55,7 @@ public class SudokuVerifier {
 		return false;
 	}
 	
-	public void verify_rows(int[][] sudokuGrid) throws IncorrectRowException {
+	protected void verify_rows(int[][] sudokuGrid) throws IncorrectRowException {
 		for(int i=0; i < sudokuGrid.length; i++) {
 			if(duplicatesInArray(sudokuGrid[i])) {
 				throw new IncorrectRowException();
@@ -63,7 +63,7 @@ public class SudokuVerifier {
 		}
 	}
 	
-	public void verify_cols(int[][] sudokuGrid) throws IncorrectColException {
+	protected void verify_cols(int[][] sudokuGrid) throws IncorrectColException {
 		for(int k=0; k < sudokuGrid.length; k++) {
 			int[] tmp_array = new int[sudokuGrid[k].length];
 			for(int j=0; j < sudokuGrid[k].length; j++) {
@@ -75,7 +75,7 @@ public class SudokuVerifier {
 		}
 	}
 	
-	public void verify_sub_grid(int[][] sudokuGrid, int start_point_row, int start_point_col) throws IncorrectSubGridException {
+	protected void verify_sub_grid(int[][] sudokuGrid, int start_point_row, int start_point_col) throws IncorrectSubGridException {
 		int[] temp_array = new int[9];
 		start_point_row = start_point_row -1;
 		start_point_col = start_point_col -1;
