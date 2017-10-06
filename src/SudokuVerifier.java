@@ -5,6 +5,7 @@ import java.util.Set;
 public class SudokuVerifier {
 	
 	private static int INPUT_LENGTH = 81;
+	private int[][] sudoku;
 	
 	public void validate_input_length(String input_string) throws IncorrectLengthException {
 		if(input_string.length() != INPUT_LENGTH) {
@@ -93,8 +94,6 @@ public class SudokuVerifier {
 	}
 	
 	public int verify(String candidateSolution) {
-		
-		int[][] sudoku;
 		
 		try {
 			sudoku = make_sudoku_grid(candidateSolution);
