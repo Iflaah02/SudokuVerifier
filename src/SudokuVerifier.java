@@ -57,7 +57,7 @@ public class SudokuVerifier {
 	
 	
 	public int checkSubGridViolation() {
-		//rule 2, not ready
+		//rule 2
 		int[] subGrid = new int[9];
 		int currentCol = 0; //factor goes through columns after three iterations
 		
