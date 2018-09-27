@@ -42,10 +42,10 @@ public class SudokuVerifier {
 		List<String> subGrids = new ArrayList<String>();
 		
 		for(int i=0; i<candidateSolution.length(); i+=27) {
-			for(int j=i; j<9; j+=3) {
+			for(int j=i; j<i+9; j+=3) {
 				subGrid = "";
-				for(int k=j; k<k+18;k+=9) {
-					for(int l=k; l<l+3;l++) {
+				for(int k=j; k<j+18;k+=9) {
+					for(int l=k; l<k+3;l++) {
 						subGrid = subGrid + candidateSolution.substring(l, l+1);
 					}
 				}
