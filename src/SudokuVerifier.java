@@ -46,8 +46,9 @@ public class SudokuVerifier {
 			// a column consists of a number from each row with the same index in said row.
 			for(int i=0; i<9; i++) {
 				for(int j=0; j<9; j++) {
-					data[i] = candidateSolution.charAt(i+j);
+					data[j] = candidateSolution.charAt(i+j*9);
 				}
+				Arrays.sort(data);
 				if ( !Arrays.equals(data,sortedNumbers)) {
 					// returns if a digit appears multiple time in a column
 					return -4;
@@ -55,16 +56,25 @@ public class SudokuVerifier {
 			}
 			
 			//check for rule n°2:
+			int temp=0;
 			//a sub-grid consists of 3 consecutive numbers of 3 consecutive rows.
-			for(int i=0; i<81; i=i+9) { // no idea
-				for(int j=0; j<3; j++) { // no idea
-					data[i] = candidateSolution.charAt(i+j); // no idea
-				} // no idea
-				
-				// actually good idea below
-				if ( !Arrays.equals(data,sortedNumbers)) {
-					// returns -2 if a digit appears multiple time in a sub-grid
-					return -2;
+			for(int i=0; i<55; i+=27) { // i is in [0,27,54]
+				for(int j=0; j<7; j+=3) { // j+i is in [0,3,6,27,30,33,54,57,60] the indexes [1,1] of every sub-grid
+					for(int k=0; k<19; k+=9) { // j+i+k is in [0,9,18,3,12,21,6,14,23,27, ... ]
+						for(int l=0; l<3; l++) { // i+j+k+l is in [0,1,2,9,10,11,18,19,20,3,4,5, ...]
+							//for example [0,1,2,9,10,11,18,19,20] are the indexes of the first sub-grid in the input string.
+							data[temp] = candidateSolution.charAt(i+j+k+l);
+							temp++;
+							if (temp == 9) {
+								temp = 0;
+								Arrays.sort(data);
+								if ( !Arrays.equals(data,sortedNumbers)) {
+									// returns -2 if a digit appears multiple time in a sub-grid
+									return -2;
+								}
+							}
+						}
+					}
 				}
 			}
 		}
