@@ -5,6 +5,9 @@ import org.junit.Test;
 
 public class SudokuVerifierParametrizedTest {
 	
+	/*Some tests have to be run so that every other test is ignored.
+	 */
+	
 	@Test
 	public void test_length() {
 		String solution = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
@@ -34,6 +37,17 @@ public class SudokuVerifierParametrizedTest {
 	}
 	
 	@Test
+	public void test_R2() {
+		String solution = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		SudokuVerifier sudo = new SudokuVerifier();
+		int result = sudo.verify(solution);
+		assertEquals(0, result);
+		solution = "123456789123456789123456789123456789123456789123456789123456789123456789123456789";
+		result = sudo.verify(solution);
+		assertEquals(-2, result);
+	}
+	
+	@Test
 	public void test_R3() {
 		String solution = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
 		SudokuVerifier sudo = new SudokuVerifier();
@@ -48,6 +62,17 @@ public class SudokuVerifierParametrizedTest {
 		solution = "417369825632158947958724316825437169791586432346912758289643571573291684164875993";
 		result = sudo.verify(solution);
 		assertEquals(-3, result);
+	}
+	
+	@Test
+	public void test_R4() {
+		String solution = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		SudokuVerifier sudo = new SudokuVerifier();
+		int result = sudo.verify(solution);
+		assertEquals(0, result);
+		solution = "4173698256321589479587243164";
+		result = sudo.verify(solution);
+		assertEquals(-4, result);
 	}
 
 }
