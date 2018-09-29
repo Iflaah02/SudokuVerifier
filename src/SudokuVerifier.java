@@ -14,6 +14,7 @@ public class SudokuVerifier {
 		*/
 		
 		int ret = checkPositiveDigits(candidateSolution); 
+		
 		if(ret != 0)
 			return ret; 
 		

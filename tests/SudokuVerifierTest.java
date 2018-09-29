@@ -14,6 +14,7 @@ public class SudokuVerifierTest {
 	}
 	*/
 	
+	
 	@Test
 	public void testCheckLength_Correct() {
 		//Arrange
