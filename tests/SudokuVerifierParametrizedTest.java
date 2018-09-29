@@ -37,7 +37,6 @@ public class SudokuVerifierParametrizedTest {
 		});
 	}
 	
-
 	@Test
 	public void testVerify() {
 	      assertEquals(expectedResult, 

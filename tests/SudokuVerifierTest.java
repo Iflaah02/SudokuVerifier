@@ -13,7 +13,7 @@ public class SudokuVerifierTest {
 		fail("Not yet implemented");
 	}
 	*/
-	
+
 	@Test
 	public void testCheckLength_Correct() {
 		//Arrange
