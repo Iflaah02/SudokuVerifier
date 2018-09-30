@@ -10,7 +10,7 @@ public class SudokuVerifierTest {
 	
 	//Verification with correct Sudoku string
 	@Test
-	public void testCorrect() {
+	public void verifyIfCorrect() {
 		SudokuVerifier verifier = new SudokuVerifier();
 		int returnCode = verifier.verify("417369825632158947958724316825437169791586432346912758289643571573291684164875293");
 		assertEquals(0, returnCode);
@@ -18,7 +18,7 @@ public class SudokuVerifierTest {
 	
 	//Verification with incorrect Sudoku string
 	@Test
-	public void testIncorrect() {
+	public void verifyIfIncorrect() {
 		SudokuVerifier verifier = new SudokuVerifier();
 		int returnCode = verifier.verify("111111122222222223333333334444444445555555555666666666777777777788888888899999999");
 		assertEquals(-2, returnCode);
@@ -26,7 +26,7 @@ public class SudokuVerifierTest {
 	
 	//R1: A cell in a Sudoku game can only store positive digits, i.e. 1...9.
 	@Test
-	public void testIncorrect_R1() {
+	public void verify_R1_Incorrect() {
 		SudokuVerifier verifier = new SudokuVerifier();
 		int returnCode = verifier.verify(""
 				+ "417369825"
@@ -43,7 +43,7 @@ public class SudokuVerifierTest {
 	
 	//R2: All digits appear only once in a sub-grid, i.e. they cannot repeat.
 	@Test
-	public void testIncorrect_R2() {
+	public void verify_R2_Incorrect() {
 		SudokuVerifier verifier = new SudokuVerifier();
 		int returnCode = verifier.verify(""
 				+ "417369825"
@@ -60,7 +60,7 @@ public class SudokuVerifierTest {
 	
 	//R3: A digit can appear only once in the rows of the global grid.
 	@Test
-	public void testIncorrect_R3() {
+	public void verify_R3_Incorrect() {
 		SudokuVerifier verifier = new SudokuVerifier();
 		int returnCode = verifier.verify(""
 				+ "417369825"
@@ -77,7 +77,7 @@ public class SudokuVerifierTest {
 	
 	//R4: A digit can appear only once in the columns of the global grid.
 	@Test
-	public void testIncorrect_R4() {
+	public void verify_R4_Incorrect() {
 		SudokuVerifier verifier = new SudokuVerifier();
 		int returnCode = verifier.verify(""
 				+ "417369825"
@@ -89,6 +89,6 @@ public class SudokuVerifierTest {
 				+ "289643571"
 				+ "537291684" //Number 3 repeats in 2nd column
 				+ "164875293");
-		assertEquals(-4, returnCode); //No repeating in a column
+		assertEquals(-4, returnCode);
 	}
 }
