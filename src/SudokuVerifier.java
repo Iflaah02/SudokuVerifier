@@ -5,6 +5,6 @@ public class SudokuVerifier {
 		// returns 0 if the candidate solution is correct
 		return 0;
 		
-		//check
+		//check zzz
 	}
 }
