@@ -9,7 +9,7 @@ public class SudokuVerifier {
 		}
 		
 		List<String> rows = getRows(candidateSolution);
-		List<String> columns = getRows(candidateSolution);
+		List<String> columns = getColumns(candidateSolution);
 		List<String> subGrids = getSubGrids(candidateSolution);
 		
 		if(!verifyList(subGrids)) {
