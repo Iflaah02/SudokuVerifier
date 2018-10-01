@@ -62,6 +62,19 @@ public class SudokuVerifierTest {
 	}
 	
 	@Test
+	public void testVerify_IllegalCharacters() {
+		// Arrange
+		SudokuVerifier verifier = new SudokuVerifier();
+		int result = 0;
+				
+		// Act
+		result = verifier.verify("417369825632158947958724316825437169791586432346912758289643571573291684164875c93");
+				
+		// Assert
+		assertEquals(-1, result);
+	}
+	
+	@Test
 	public void testGetRows_2ndRow() {
 		// Arrange
 		SudokuVerifier verifier = new SudokuVerifier();
@@ -100,6 +113,61 @@ public class SudokuVerifierTest {
 		result = subGrids.get(1);
 		
 		// Assert
-		assertEquals("369157624", result);
+		assertEquals("369158724", result);
+	}
+	
+	@Test
+	public void testGetSubGrids_4thSubGrid() {
+		// Arrange
+		SudokuVerifier verifier = new SudokuVerifier();
+		String result = "0";
+				
+		// Act
+		List<String> subGrids = verifier.getSubGrids("417369825632158947958724316825437169791586432346912758289643571573291684164875293");
+		result = subGrids.get(3);
+		
+		// Assert
+		assertEquals("825791346", result);
+	}
+	
+	@Test
+	public void testVerifyList_ValidList() {
+		// Arrange
+		SudokuVerifier verifier = new SudokuVerifier();
+		boolean result = true;
+				
+		// Act
+		List<String> subGrids = verifier.getSubGrids("417369825632158947958724316825437169791586432346912758289643571573291684164875293");
+		result = verifier.verifyList(subGrids);
+		
+		// Assert
+		assertEquals(true, result);
+	}
+	
+	@Test
+	public void testVerifyList_InvalidList() {
+		// Arrange
+		SudokuVerifier verifier = new SudokuVerifier();
+		boolean result = true;
+				
+		// Act
+		List<String> subGrids = verifier.getSubGrids("123456789912345678891234567789123456678912345567891234456789123345678912234567891");
+		result = verifier.verifyList(subGrids);
+		
+		// Assert
+		assertEquals(false, result);
+	}
+	
+	@Test
+	public void testVerify_InvalidString() {
+		// Arrange
+		SudokuVerifier verifier = new SudokuVerifier();
+		int result = 0;
+				
+		// Act
+		result = verifier.verify("123456789912345678891234567789123456678912345567891234456789123345678912234567891");
+				
+		// Assert
+		assertEquals(-2, result);
 	}
 }
