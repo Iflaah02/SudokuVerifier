@@ -3,62 +3,95 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class SudokuVerifierParametrizedTest {
-
-	@Test (expected = IllegalArgumentException.class)
-	public void testVerify_inputIsLessThan81() {
-		SudokuVerifier verif = new SudokuVerifier();
-		String sudokuString = "41736982563215894795872431682543716979158643234691275828964357157329168416487529"; //80 letters long
-		
-		verif.verify(sudokuString);
-	}
 	
-	@Test (expected = IllegalArgumentException.class)
-	public void testVerify_inputIsMoreThan81() {
+	@Test
+	public void testCheckRule1_AllCharsAreNumerical_pass() {
 		SudokuVerifier verif = new SudokuVerifier();
-		String sudokuString = "4173698256321589479587243168254371697915864323469127582896435715732916841648752932"; //80 letters long
+		String sudokuString = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
 		
-		verif.verify(sudokuString);
+		assertTrue(verif.checkRule1_AllCharsAreNumerical(sudokuString));
 	}
 	
 	@Test
-	public void testVerify_inputWithNonNumeric_1() {
+	public void testCheckRule1_AllCharsAreNumerical_fail() {
 		SudokuVerifier verif = new SudokuVerifier();
-		String sudokuString = "4173698256a2158947958724316825437169791586432346912758289643571573291684164875293"; //80 letters long
+		String sudokuString = "41736a82563215894795872431682543716979158643234691275828964W571573291684164875293";
 		
-		assertEquals(-1, verif.verify(sudokuString));
+		assertFalse(verif.checkRule1_AllCharsAreNumerical(sudokuString));
+	}
+	
+	//checkRule2_AllSubgridsAreValid
+	@Test
+	public void testCheckRule2_AllSubgridsAreValid_pass() {
+		SudokuVerifier verif = new SudokuVerifier();
+		String sudokuString = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		ArgumentPasser args = new ArgumentPasser(sudokuString);
+		
+		assertTrue(verif.checkRule2_AllSubgridsAreValid(args));
 	}
 	
 	@Test
-	public void testVerify_inputWithNonNumeric_2() {
+	public void testCheckRule2_AllSubgridsAreValid_fail() {
 		SudokuVerifier verif = new SudokuVerifier();
-		String sudokuString = "4173698256/2158947958724316825437169791586432346912758289643571573291684164875293"; //80 letters long
+		String sudokuString = "41736a82563215894795872431682543716979158643234691275828964W571573291684164875293";
+		ArgumentPasser args = new ArgumentPasser(sudokuString);
 		
-		assertEquals(-1, verif.verify(sudokuString));
+		assertFalse(verif.checkRule2_AllSubgridsAreValid(args));
+	}
+	
+	
+	
+	
+	@Test
+	public void testCheckRule3_AllrowsAreValid_pass() {
+		SudokuVerifier verif = new SudokuVerifier();
+		String sudokuString = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		ArgumentPasser args = new ArgumentPasser(sudokuString);
+		
+		assertTrue(verif.checkRule3_AllrowsAreValid(args));
 	}
 	
 	@Test
-	public void testVerify_sameNumberOnARow() {
+	public void testCheckRule3_AllrowsAreValid_fail() {
 		SudokuVerifier verif = new SudokuVerifier();
-		String sudokuString = "447369825632158947958724316825437169791586432346912758289643571573291684164875293"; //80 letters long
+		String sudokuString = "417369825632258947958724316825437169791586432346912758289643571573291684164875293";
+		ArgumentPasser args = new ArgumentPasser(sudokuString);
+		//                                 * changed from 1 to 2
+		assertFalse(verif.checkRule3_AllrowsAreValid(args));
+		}
+	
+	@Test
+	public void testCheckRule4_AllcolumnsAreValid_fail() {
+		SudokuVerifier verif = new SudokuVerifier();
+		String sudokuString = "417369825432158947958724316825437169791586432346912758289643571573291684164875293";
+		//                              * changed from 6 to 4
+		ArgumentPasser args = new ArgumentPasser(sudokuString);
 		
-		assertEquals(-3, verif.verify(sudokuString));
+		assertFalse(verif.checkRule4_AllcolumnsAreValid(args));
+		}
+	
+	@Test
+	public void testCheckRule4_AllcolumnsAreValid_pass() {
+		SudokuVerifier verif = new SudokuVerifier();
+		String sudokuString = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
+		ArgumentPasser args = new ArgumentPasser(sudokuString);
+		
+		assertTrue(verif.checkRule4_AllcolumnsAreValid(args));
+		}
+	
+	@Test 
+	public void testCandidateSolutionIs81CharsLong_fail() {
+		SudokuVerifier verif = new SudokuVerifier();
+		String incorrect = "4173698256321589479587243168237169791586432346912758289643571573291684164875293"; //79 characters long
+		
+		assertFalse( verif.candidateSolutionIs81CharsLong(incorrect) );
 	}
 	
 	@Test
-	public void testVerify_sameNumberOnAColumn() {
+	public void testCandidateSolutionIs81CharsLong_success() {
 		SudokuVerifier verif = new SudokuVerifier();
-		String sudokuString = "417369825432158947958724316825437169791586432346912758289643571573291684164875293"; //80 letters long
+		String correct = "417369825632158947958724316825437169791586432346912758289643571573291684164875293";
 		
-		fail("I cannot make this work, I don't know any input respecting all the rules except n°4");
-		//assertEquals(-4, verif.verify(sudokuString));
-	}
-	
-	@Test
-	public void testVerify_sameNumberOnASubgrid() {
-		SudokuVerifier verif = new SudokuVerifier();
-		String sudokuString = "417369825642158947958724316825437169791586432346912758289643571573291684164875293"; //80 letters long
-		
-		fail("I cannot make this work, I don't know any input respecting all the rules except n°2");
-		//assertEquals(-2, verif.verify(sudokuString));
+		assertTrue( verif.candidateSolutionIs81CharsLong(correct) );
 	}
 }

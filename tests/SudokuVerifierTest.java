@@ -22,4 +22,11 @@ public class SudokuVerifierTest {
 		
 		assertFalse(0 == verif.verify(incorrect));
 	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testVerify_incorrectInput() {
+		SudokuVerifier verif = new SudokuVerifier();
+		String incorrect = "12345678991234567889123456778912345667891234556789123445678912334567891223456789"; // 80 characters long
+		verif.verify(incorrect);
+	}
 }
